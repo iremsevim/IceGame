@@ -23,9 +23,9 @@ public class PlayerController : GameSingleActor<PlayerController>
     {
         Letter.onDownLetterButton = (string letter) =>
           {
-             currentWords.Add(letter);
+              currentWords.Add(letter);
               inputChecking = true;
-              inputCheckingTimer = Time.time + 1f;
+              inputCheckingTimer = Time.time + 2f;
              
           };
      }
@@ -137,7 +137,6 @@ public class PlayerController : GameSingleActor<PlayerController>
            yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);
            anim.SetBool("run", AnimStatus);
-
     }
 
     private void OnTriggerEnter(Collider other)

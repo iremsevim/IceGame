@@ -18,7 +18,7 @@ public class UIActor : GameSingleActor<UIActor>
     {
         if(status)
         {
-            letterpanel.DOLocalMoveY(letterPanelFirstPos.y+600F, 0.75f);
+            letterpanel.DOLocalMoveY(letterPanelFirstPos.y-230f, 0.75f);
         }
         else
         {
