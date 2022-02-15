@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [AddComponentMenu("Breakable Windows/Breakable Window")]
-[RequireComponent(typeof(AudioSource))]
 public class BreakableWindow : MonoBehaviour {
 
     
@@ -31,9 +30,6 @@ public class BreakableWindow : MonoBehaviour {
     [Space]
     [Tooltip("Seconds after window is broken that splinters have to be destroyed.")]
     public float destroySplintersTime = 0;
-
-    [Space]
-    public AudioClip breakingSound;
 
 
     [HideInInspector]
@@ -224,11 +220,7 @@ public class BreakableWindow : MonoBehaviour {
             isBroken = true;            
         }
 
-        if (breakingSound != null)
-        {
-            GetComponent<AudioSource>().clip = breakingSound;
-            GetComponent<AudioSource>().Play();
-        }
+        
 
         return splinters.ToArray();
     }
