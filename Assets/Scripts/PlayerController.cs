@@ -29,5 +29,9 @@ public class PlayerController : GameSingleActor<PlayerController>
 
 
     }
+    public void OnTouchedIceGroupCollider(IceGroupCarrier touchedGroup)
+    {
+
+    }
 
 }
