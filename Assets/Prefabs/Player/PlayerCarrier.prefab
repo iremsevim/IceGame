@@ -167,7 +167,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1737582686332369237}
   - component: {fileID: 5691721909898076975}
-  - component: {fileID: 2150677512493495170}
   - component: {fileID: 5677360483439117885}
   - component: {fileID: 5031776984407284185}
   m_Layer: 0
@@ -212,18 +211,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2150677512493495170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1393567851516126191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0caad2a8f3e1a0a4fb5b2270d1b4f0c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &5677360483439117885
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -418,6 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 151222870122399126}
+  - component: {fileID: 1401381777314297226}
   m_Layer: 0
   m_Name: PlayerCarrier
   m_TagString: Untagged
@@ -440,6 +428,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1401381777314297226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2603864480507758306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0caad2a8f3e1a0a4fb5b2270d1b4f0c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 5691721909898076975}
 --- !u!1 &2914077254317042630
 GameObject:
   m_ObjectHideFlags: 0
