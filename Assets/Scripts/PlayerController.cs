@@ -25,7 +25,7 @@ public class PlayerController : GameSingleActor<PlayerController>
           {
               currentWords.Add(letter);
               inputChecking = true;
-              inputCheckingTimer = Time.time + 2f;
+              inputCheckingTimer = Time.time + 1.5f;
              
           };
      }
@@ -113,6 +113,7 @@ public class PlayerController : GameSingleActor<PlayerController>
         }
       
           Debug.Log("FAIL");
+          FalseAnswer();
             result =false;
         
       
@@ -122,8 +123,6 @@ public class PlayerController : GameSingleActor<PlayerController>
     public IEnumerator TrueAnswer()
     {
         IceGroup findedgroup = currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
-
-        
             foreach (var item in findedgroup.iceProfiles)
             {
               // item.ice.GetComponent<Ice>().BreakIce();
@@ -131,12 +130,19 @@ public class PlayerController : GameSingleActor<PlayerController>
                 Destroy(item.ice.gameObject);
                 yield return new WaitForSeconds(0.15f);
             }
-          UIActor.Instance.ShowHideLetterPanel(false);
+          StartCoroutine(UIActor.Instance.ClearTypedLetter(true));
            yield return new WaitForSeconds(0.15f);
         currentIceGroup.groups.ForEach(X => Destroy(X.gameObject));
            yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);
+           currentWords.Clear();
            anim.SetBool("run", AnimStatus);
+    }
+    public void FalseAnswer()
+    {
+           StartCoroutine(UIActor.Instance.ClearTypedLetter(false));
+            currentWords.Clear();
+        
     }
 
     private void OnTriggerEnter(Collider other)
