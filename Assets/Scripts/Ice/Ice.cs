@@ -8,7 +8,7 @@ public class Ice : MonoBehaviour
     public ParticleSystem smoke;
     public void BreakIce()
     {
-        breakableWindow.breakWindow();
+       // breakableWindow.breakWindow();
         smoke.Play();
     }
 }

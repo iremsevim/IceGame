@@ -16,18 +16,33 @@ public class PlayerController : GameSingleActor<PlayerController>
     public bool isMovement = true;
     public List<string> currentWords;
     public IceGroupCarrier currentIceGroup;
+    private bool inputChecking;
+    private float inputCheckingTimer;
   
     public override void ActorAwake()
     {
         Letter.onDownLetterButton = (string letter) =>
           {
              currentWords.Add(letter);
-              IsThereWord();
+              inputChecking = true;
+              inputCheckingTimer = Time.time + 1f;
+             
           };
      }
     public override void ActorStart()
     {
         anim.SetBool("run", true);
+    }
+    public override void ActorUpdate()
+    {
+       if(inputChecking)
+        {
+            if(inputCheckingTimer<Time.time)
+            {
+                inputChecking = false;
+                IsThereWord();
+            }
+        }
     }
     public override void ActorFixedUpdate()
     {
@@ -71,39 +86,37 @@ public class PlayerController : GameSingleActor<PlayerController>
         bool result = false;
         IceGroup  findedgroup=currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
         int count = 0;
-        if (!findedgroup) return false;
-        for (int i = 0; i < findedgroup.iceProfiles.Count; i++)
+        if (findedgroup)
         {
-            if (findedgroup.iceProfiles[i].iceName.ToString() == currentWords[i])
+            for (int i = 0; i < findedgroup.iceProfiles.Count; i++)
             {
-                count++;
-                continue;
-               
-            }
-            else
-            {
-               
-                break;
-              
-            }
-        }
-        if(count==findedgroup.iceProfiles.Count)
-        {
-            Debug.Log("WIN");
-            result = true;
-           StartCoroutine(TrueAnswer());
+                if (findedgroup.iceProfiles[i].iceName.ToString() == currentWords[i])
+                {
+                    count++;
+                    continue;
 
-        }
-        else
-        {
-            Debug.Log("FAIL");
-            result=false;
+                }
+                else
+                {
+                    break;
+
+                }
+            }
+            if (count == findedgroup.iceProfiles.Count)
+            {
+                Debug.Log("WIN");
+
+                result = true;
+                StartCoroutine(TrueAnswer());
+                return true;
+            }
         }
       
-        return result;
-       
+          Debug.Log("FAIL");
+            result =false;
         
-
+      
+        return result;
     
     }
     public IEnumerator TrueAnswer()
@@ -113,13 +126,13 @@ public class PlayerController : GameSingleActor<PlayerController>
         
             foreach (var item in findedgroup.iceProfiles)
             {
-               item.ice.GetComponent<Ice>().BreakIce();
+              // item.ice.GetComponent<Ice>().BreakIce();
                yield return new WaitForSeconds(0.10f);
                 Destroy(item.ice.gameObject);
                 yield return new WaitForSeconds(0.15f);
             }
           UIActor.Instance.ShowHideLetterPanel(false);
-        yield return new WaitForSeconds(0.15f);
+           yield return new WaitForSeconds(0.15f);
         currentIceGroup.groups.ForEach(X => Destroy(X.gameObject));
            yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);
