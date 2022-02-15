@@ -8,7 +8,8 @@ public enum IceType
 }
 public class IceGroup : MonoBehaviour
 {
-    public List<IceProfile> iceProfiles;
+    public   List<IceProfile> iceProfiles;
+
     [System.Serializable]
     public class IceProfile
     {

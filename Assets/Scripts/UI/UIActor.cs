@@ -8,6 +8,7 @@ public class UIActor : GameSingleActor<UIActor>
 {
     public RectTransform letterpanel;
     private Vector3 letterPanelFirstPos;
+   
     public override void ActorAwake()
     {
         letterPanelFirstPos = letterpanel.GetComponent<RectTransform>().position;
@@ -17,11 +18,11 @@ public class UIActor : GameSingleActor<UIActor>
     {
         if(status)
         {
-            letterpanel.DOLocalMoveY(letterPanelFirstPos.y, 1f);
+            letterpanel.DOLocalMoveY(letterPanelFirstPos.y+600F, 0.75f);
         }
         else
         {
-            letterpanel.DOMove(letterPanelFirstPos, 1f);
+            letterpanel.DOMove(letterPanelFirstPos, 0.75f);
         }
     }
 }
