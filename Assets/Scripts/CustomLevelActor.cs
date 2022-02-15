@@ -8,7 +8,8 @@ public class CustomLevelActor : LevelActor
     public Transform characterPoint;
     public override void SetupLevel()
     {
-     GameObject character=Instantiate(GameData.Instance.gameDataSO.characterPrefab, characterPoint.position, Quaternion.identity);
+        GameObject character=Instantiate(GameData.Instance.gameDataSO.characterPrefab, characterPoint.position, Quaternion.identity);
         character.transform.SetParent(transform);
+        CameraActor.Instance.firstFollowCamera.Follow = character.transform;
     }
 }
