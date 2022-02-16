@@ -26,7 +26,7 @@ public class PlayerController : GameSingleActor<PlayerController>
           {
               currentWords.Add(letter);
               inputChecking = true;
-              inputCheckingTimer = Time.time + 1.5f;
+              inputCheckingTimer = Time.time + 1.15f;
              
           };
      }
@@ -125,16 +125,17 @@ public class PlayerController : GameSingleActor<PlayerController>
     {
         IceGroup findedgroup = currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
         StartCoroutine(UIActor.Instance.ClearTypedLetter(true));
-     
+        Destroy(currentIceGroup.failCollider);
+      
         foreach (var item in findedgroup.iceProfiles)
             {
            
               allcollectedChars.Add(item.ice.iceChar);
-              //yield return new WaitForSeconds(0.15f);
+             // yield return new WaitForSeconds(0.15f);
               item.ice.GetComponent<Ice>().BreakIce();
-               yield return new WaitForSeconds(0.55f);
+              yield return new WaitForSeconds(0.25f);
                 Destroy(item.ice.gameObject);
-                yield return new WaitForSeconds(0.1f);
+              
           
             }
         CameraActor.Instance.firstFollowCamera.Follow = allcollectedChars[allcollectedChars.Count - 1].transform;
@@ -142,7 +143,7 @@ public class PlayerController : GameSingleActor<PlayerController>
 
         yield return new WaitForSeconds(0.15f);
         currentIceGroup.groups.ForEach(X => Destroy(X.gameObject));
-           yield return new WaitForSeconds(0.25f);
+           yield return new WaitForSeconds(0.35f);
            StopOrContinue(false);
            currentWords.Clear();
            anim.SetBool("run", AnimStatus);
@@ -166,6 +167,7 @@ public class PlayerController : GameSingleActor<PlayerController>
         isMovement = false;
         rb.velocity = Vector3.zero;
         GameManager.Instance.FinishLevel(false);
+        UIActor.Instance.ShowHideLetterPanel(true);
         anim.SetTrigger("fail");
     }
     public void OnTouchedFailCollider(FailColliderController fail)

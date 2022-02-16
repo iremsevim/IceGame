@@ -336,6 +336,7 @@ MonoBehaviour:
   - {fileID: 1686074646}
   - {fileID: 1450827351}
   - {fileID: 571861606}
+  failCollider: {fileID: 5804574983962944491}
 --- !u!1 &1686074644
 GameObject:
   m_ObjectHideFlags: 0
