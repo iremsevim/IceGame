@@ -415,7 +415,11 @@ MonoBehaviour:
   rb: {fileID: 4249764617722544143}
   inputManager: {fileID: 2747089881790733540}
   movementSpeed: 10
-  rotateSpeed: 7
+  rotateSpeed: 9
+  isMovement: 1
+  currentWords: []
+  currentIceGroup: {fileID: 0}
+  allcollectedChars: []
 --- !u!136 &1954279853614425560
 CapsuleCollider:
   m_ObjectHideFlags: 0
