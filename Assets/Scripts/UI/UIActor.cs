@@ -4,6 +4,9 @@ using UnityEngine;
 using DG.Tweening;
 using Coskunerov.Actors;
 using UnityEngine.UI;
+using Coskunerov.EventBehaviour;
+using Coskunerov.EventBehaviour.Attributes;
+
 
 public class UIActor : GameSingleActor<UIActor>
 {
@@ -11,6 +14,9 @@ public class UIActor : GameSingleActor<UIActor>
     private Vector3 letterPanelFirstPos;
     public Text typedletters;
     private Color panelColor;
+    [Header("UI Panels")]
+    public GameObject winPanel;
+    public GameObject failPanel;
 
     public override void ActorAwake()
     {
@@ -52,6 +58,37 @@ public class UIActor : GameSingleActor<UIActor>
 
         }
       
+
+
+    }
+
+
+    public void NextLevel()
+    {
+        Coskunerov.Managers.GameManager.Instance.NextLevel();
+        winPanel.SetActive(false);
+        failPanel.SetActive(false);
+    }
+
+    [GE(BaseGameEvents.WinGame)]
+    public void WinGame()
+    {
+        winPanel.SetActive(true);
+        failPanel.SetActive(false);
+       // Elephant.LevelCompleted(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
+    }
+    [GE(BaseGameEvents.LoseGame)]
+    public void FailGame()
+    {
+        winPanel.SetActive(false);
+        failPanel.SetActive(true);
+        //Elephant.LevelFailed(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
+    }
+    [GE(BaseGameEvents.RestartGame)]
+    public void Retry()
+    {
+        winPanel.SetActive(false);
+        failPanel.SetActive(false);
 
 
     }

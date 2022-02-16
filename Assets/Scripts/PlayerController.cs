@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Coskunerov.Actors;
 using System.Linq;
+using Coskunerov.Managers;
 
 public class PlayerController : GameSingleActor<PlayerController>
 {
@@ -159,6 +160,17 @@ public class PlayerController : GameSingleActor<PlayerController>
         {
             triggerListener.OnTouched(this);
         }
+    }
+    private void Fail()
+    {
+        isMovement = false;
+        rb.velocity = Vector3.zero;
+        GameManager.Instance.FinishLevel(false);
+        anim.SetTrigger("fail");
+    }
+    public void OnTouchedFailCollider(FailColliderController fail)
+    {
+        Fail();
     }
 
 }

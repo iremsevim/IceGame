@@ -13,6 +13,5 @@ public class Ice : MonoBehaviour
        breakableWindow.breakWindow();
          StartCoroutine(iceChar.Fall());
 
-     
     }
 }
