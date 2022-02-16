@@ -20,6 +20,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     private bool inputChecking;
     private float inputCheckingTimer;
     public  List<IceChar> allcollectedChars;
+    private bool IsFailLetter;
     public override void ActorAwake()
     {
         Letter.onDownLetterButton = (string letter) =>
@@ -60,7 +61,6 @@ public class PlayerController : GameSingleActor<PlayerController>
         float rot_y = Mathf.Atan2(rb.velocity.x, rb.velocity.z) * Mathf.Rad2Deg;
         rot_y = Mathf.Clamp(rot_y, -25, 25);
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.localEulerAngles.x, rot_y, transform.localEulerAngles.x), 0.5f);
-
     }
     private void StopOrContinue(bool movementStatus)
     {
@@ -82,8 +82,25 @@ public class PlayerController : GameSingleActor<PlayerController>
        
       
     }
+    public void MovementSpeedController(bool IsitClose)
+    {
+       
+        if(IsitClose)
+        {
+            movementSpeed /= 2.5f;
+
+        }
+        else
+        {
+            movementSpeed *= 2.5f;
+        }
+    }
     public bool IsThereWord()
     {
+        if (IsFailLetter)
+        {
+            return false;
+        }
         bool result = false;
         IceGroup  findedgroup=currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
         int count = 0;
@@ -123,6 +140,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     public IEnumerator TrueAnswer()
     {
+       
         IceGroup findedgroup = currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
         StartCoroutine(UIActor.Instance.ClearTypedLetter(true));
         Destroy(currentIceGroup.failCollider);
@@ -133,17 +151,16 @@ public class PlayerController : GameSingleActor<PlayerController>
               allcollectedChars.Add(item.ice.iceChar);
              // yield return new WaitForSeconds(0.15f);
               item.ice.GetComponent<Ice>().BreakIce();
-              yield return new WaitForSeconds(0.25f);
-                Destroy(item.ice.gameObject);
-              
-          
+              yield return new WaitForSeconds(0.15f);
+              Destroy(item.ice.gameObject);
             }
+        MovementSpeedController(false);
         CameraActor.Instance.firstFollowCamera.Follow = allcollectedChars[allcollectedChars.Count - 1].transform;
 
 
         yield return new WaitForSeconds(0.15f);
         currentIceGroup.groups.ForEach(X => Destroy(X.gameObject));
-           yield return new WaitForSeconds(0.35f);
+           yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);
            currentWords.Clear();
            anim.SetBool("run", AnimStatus);
@@ -164,15 +181,20 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     private void Fail()
     {
+       
         isMovement = false;
         rb.velocity = Vector3.zero;
         GameManager.Instance.FinishLevel(false);
-        UIActor.Instance.ShowHideLetterPanel(true);
+        UIActor.Instance.ShowHideLetterPanel(false);
         anim.SetTrigger("fail");
     }
     public void OnTouchedFailCollider(FailColliderController fail)
     {
         Fail();
+    }
+    public void OnTouchedLastInput(LastInputController lastInputController)
+    {
+        IsFailLetter = true;
     }
 
 }
