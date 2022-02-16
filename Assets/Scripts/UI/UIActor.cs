@@ -34,7 +34,6 @@ public class UIActor : GameSingleActor<UIActor>
         if(status)
         {
             letterpanel.GetComponent<Image>().color = Color.green;
-            ShowHideLetterPanel(false);
             typedletters.text = string.Empty;
             yield return new WaitForSeconds(2F);
             letterpanel.GetComponent<Image>().color = panelColor;

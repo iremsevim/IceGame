@@ -18,7 +18,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     public IceGroupCarrier currentIceGroup;
     private bool inputChecking;
     private float inputCheckingTimer;
-  
+    public  List<IceChar> allcollectedChars;
     public override void ActorAwake()
     {
         Letter.onDownLetterButton = (string letter) =>
@@ -29,6 +29,8 @@ public class PlayerController : GameSingleActor<PlayerController>
              
           };
      }
+    public  Vector3 LastPos => transform.localPosition;
+   
     public override void ActorStart()
     {
         anim.SetBool("run", true);
@@ -76,9 +78,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     public void OnTouchedIceGroupCollider(IceGroupCarrier touchedGroup)
     {
         currentIceGroup = touchedGroup;
-        UIActor.Instance.ShowHideLetterPanel(true);
-        StopOrContinue(true);
-        anim.SetBool("run", AnimStatus);
+       
       
     }
     public bool IsThereWord()
@@ -123,15 +123,23 @@ public class PlayerController : GameSingleActor<PlayerController>
     public IEnumerator TrueAnswer()
     {
         IceGroup findedgroup = currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
-            foreach (var item in findedgroup.iceProfiles)
+        StartCoroutine(UIActor.Instance.ClearTypedLetter(true));
+     
+        foreach (var item in findedgroup.iceProfiles)
             {
-              // item.ice.GetComponent<Ice>().BreakIce();
-               yield return new WaitForSeconds(0.10f);
+           
+              allcollectedChars.Add(item.ice.iceChar);
+              //yield return new WaitForSeconds(0.15f);
+              item.ice.GetComponent<Ice>().BreakIce();
+               yield return new WaitForSeconds(0.55f);
                 Destroy(item.ice.gameObject);
-                yield return new WaitForSeconds(0.15f);
+                yield return new WaitForSeconds(0.1f);
+          
             }
-          StartCoroutine(UIActor.Instance.ClearTypedLetter(true));
-           yield return new WaitForSeconds(0.15f);
+        CameraActor.Instance.firstFollowCamera.Follow = allcollectedChars[allcollectedChars.Count - 1].transform;
+
+
+        yield return new WaitForSeconds(0.15f);
         currentIceGroup.groups.ForEach(X => Destroy(X.gameObject));
            yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);

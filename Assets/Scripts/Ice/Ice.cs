@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Ice : MonoBehaviour
 {
-    public BreakableWindow breakableWindow;
-    public ParticleSystem smoke;
+   public BreakableWindow breakableWindow;
+    public IceChar iceChar;
+
     public void BreakIce()
     {
-       // breakableWindow.breakWindow();
-        smoke.Play();
+        if (breakableWindow == null) return;
+       breakableWindow.breakWindow();
+         StartCoroutine(iceChar.Fall());
+
+     
     }
 }

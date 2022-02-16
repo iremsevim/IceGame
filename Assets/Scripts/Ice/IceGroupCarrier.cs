@@ -6,5 +6,6 @@ using System.Linq;
 public class IceGroupCarrier : MonoBehaviour
 {
     public  List<IceGroup> groups;
+    public Transform firstIceCharPoint;
 
 }

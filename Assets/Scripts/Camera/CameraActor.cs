@@ -8,7 +8,8 @@ using Cinemachine;
 public enum CameraType
 {
     CharacterFollow,
-    FinishCamera
+    FinishCamera,
+    AddCharacterMoment
 }
 public class CameraActor : GameSingleActor<CameraActor>
 {
