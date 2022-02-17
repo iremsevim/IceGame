@@ -30,7 +30,8 @@ public class IceChar : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         direcitonAmount *= -1;
         transform.localScale *= 2.85f;
-        transform.DOMove(charPos, 0.1f).OnComplete(() =>
+      
+        transform.DOMove(charPos,0.1f).OnComplete(() =>
         {
             transform.localEulerAngles = Vector3.zero;
             isMovement = true;
