@@ -9,7 +9,9 @@ public enum CameraType
 {
     CharacterFollow,
     FinishCamera,
-    AddCharacterMoment
+    AddCharacterMoment,
+    PoliceChase,
+    AfterChase
 }
 public class CameraActor : GameSingleActor<CameraActor>
 {
@@ -20,7 +22,7 @@ public class CameraActor : GameSingleActor<CameraActor>
 
     public override void ActorStart()
     {
-        SwitchCamera(CameraType.CharacterFollow);
+        SwitchCamera(CameraType.PoliceChase);
     }
     
 
