@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -1011669210, guid: 50593fe7980fa5147bccdc680c597349, type: 3}
   m_Name: FX Data
   m_EditorClassIdentifier: 
-  particleDatas: []
+  particleDatas:
+  - ID: confetti
+    Prefab: {fileID: 2338859797391700087, guid: 7f5dc47baec337e48a4c20fdcd95ee22, type: 3}
   soundDatas: []

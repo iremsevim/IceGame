@@ -5,6 +5,8 @@ using Coskunerov.Actors;
 using System.Linq;
 using Coskunerov.Managers;
 using DG.Tweening;
+using Coskunerov.Resources;
+using Coskunerov.Utilities;
 
 public class PlayerController : GameSingleActor<PlayerController>
 {
@@ -235,8 +237,8 @@ public class PlayerController : GameSingleActor<PlayerController>
 
            transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f);
             anim.SetTrigger("dance");
-           
-
+            ParticleFXDisplayer confetti = new ParticleFXDisplayer() { destroyTime = 2f, particleID = "confetti", position = transform.localPosition+transform.up*8f };
+            confetti.Display();
         });
 
     }
