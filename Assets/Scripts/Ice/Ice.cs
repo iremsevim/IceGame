@@ -7,11 +7,12 @@ public class Ice : MonoBehaviour
    public BreakableWindow breakableWindow;
     public IceChar iceChar;
 
-    public void BreakIce()
+    public void BreakIce(System.Action onMovementDone=null)
     {
         if (breakableWindow == null) return;
-       breakableWindow.breakWindow();
-         StartCoroutine(iceChar.Fall());
+           breakableWindow.breakWindow();
+      
+         StartCoroutine(iceChar.Fall(onMovementDone));
 
     }
 }

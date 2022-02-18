@@ -21,25 +21,35 @@ public class IceChar : MonoBehaviour
         }
        
     }
-    public IEnumerator Fall()
+
+    public IEnumerator Fall(System.Action onMovementDone=null)
     {
         transform.SetParent(null);
         anim.SetTrigger("fall");
-      
+
         Vector3 charPos =player.LastPos - (player.allcollectedChars.Count * (Vector3.forward * 3f)) + Vector3.up * 0.5f+(Vector3.right *1.25f)*direcitonAmount;
         yield return new WaitForSeconds(0.1f);
         direcitonAmount *= -1;
         transform.localScale *= 2.85f;
-      
-        transform.DOMove(charPos,0.1f).OnComplete(() =>
+
+        float dist= Vector3.Distance(transform.position, charPos);
+        float multiper = dist / 30f;
+        transform.SetParent(player.transform);
+        Vector3 targetPos= player.transform.InverseTransformPoint(charPos);
+        anim.SetBool("run", true);
+        transform.DOLocalMove(targetPos, multiper*0.5f).SetEase(Ease.Linear).OnComplete(() =>
         {
             transform.localEulerAngles = Vector3.zero;
             isMovement = true;
-            transform.SetParent(player.transform);
-     
+            onMovementDone?.Invoke();
+          
         }); 
 
 
     }
-   
+    public void OnFinish()
+    {
+        anim.SetTrigger("dance");
+
+    }
 }

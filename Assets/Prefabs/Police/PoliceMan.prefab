@@ -1403,6 +1403,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b0b4f0d0fe22b41a9b624532fed4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: -7}
+  chaseTimer: 2
+  animator: {fileID: 8208096543017860774}
 --- !u!136 &5890240565133556499
 CapsuleCollider:
   m_ObjectHideFlags: 0

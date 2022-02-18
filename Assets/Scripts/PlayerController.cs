@@ -4,6 +4,7 @@ using UnityEngine;
 using Coskunerov.Actors;
 using System.Linq;
 using Coskunerov.Managers;
+using DG.Tweening;
 
 public class PlayerController : GameSingleActor<PlayerController>
 {
@@ -21,6 +22,9 @@ public class PlayerController : GameSingleActor<PlayerController>
     private float inputCheckingTimer;
     public  List<IceChar> allcollectedChars;
     private bool IsFailLetter;
+    [Header("Particles")]
+    public ParticleSystem allTakeIceChars;
+ 
     public override void ActorAwake()
     {
         Letter.onDownLetterButton = (string letter) =>
@@ -31,7 +35,7 @@ public class PlayerController : GameSingleActor<PlayerController>
              
           };
      }
-    public  Vector3 LastPos => transform.localPosition;
+    public Vector3 LastPos => transform.position;
    
     public override void ActorStart()
     {
@@ -144,18 +148,21 @@ public class PlayerController : GameSingleActor<PlayerController>
         IceGroup findedgroup = currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
         StartCoroutine(UIActor.Instance.ClearTypedLetter(true));
         Destroy(currentIceGroup.failCollider);
-      
-        foreach (var item in findedgroup.iceProfiles)
-            {
-           
-              allcollectedChars.Add(item.ice.iceChar);
-             // yield return new WaitForSeconds(0.15f);
-              item.ice.GetComponent<Ice>().BreakIce();
-              yield return new WaitForSeconds(0.15f);
-              Destroy(item.ice.gameObject);
-            }
+        for (int i = 0; i < findedgroup.iceProfiles.Count; i++)
+        {
+            var item = findedgroup.iceProfiles[i];
+            allcollectedChars.Add(item.ice.iceChar);
+
+            System.Action action = null;
+            if (i == findedgroup.iceProfiles.Count - 1) action = RefreshCamera;
+            item.ice.GetComponent<Ice>().BreakIce(action);
+            yield return new WaitForSeconds(0.1f);
+            Destroy(item.ice.gameObject);
+            yield return new WaitForSeconds(0.25f);
+
+        }
         MovementSpeedController(false);
-        CameraActor.Instance.firstFollowCamera.Follow = allcollectedChars[allcollectedChars.Count - 1].transform;
+        
 
 
         yield return new WaitForSeconds(0.15f);
@@ -163,7 +170,15 @@ public class PlayerController : GameSingleActor<PlayerController>
            yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);
            currentWords.Clear();
-           anim.SetBool("run", AnimStatus);
+
+     
+          
+    }
+    private void RefreshCamera()
+    {
+
+        CameraActor.Instance.firstFollowCamera.Follow = allcollectedChars[allcollectedChars.Count - 1].transform;
+        allTakeIceChars.Play();
     }
     public void FalseAnswer()
     {
@@ -196,5 +211,45 @@ public class PlayerController : GameSingleActor<PlayerController>
     {
         IsFailLetter = true;
     }
+    public void OnTouchedFinish(FinishController finish)
+    {
+        UIActor.Instance.ShowHideLetterPanel(false);
+        FinishController.FinishProfile profile=finish.finishProfiles.Find(x => x.mincollectedCharacterCount<=allcollectedChars.Count && x.maxcollectedCharacterCount>= allcollectedChars.Count);
+        float dist = Vector3.Distance(transform.position, profile.targetPoint.position);
+        Debug.Log(dist);
+        rb.velocity = Vector3.zero;
+        isMovement = false;
+        dist /= 3;
+        transform.DOMove(profile.targetPoint.position, dist / finish.finishProfiles.Count).SetEase(Ease.Flash).OnComplete(()=> 
+        {
+            CameraActor.Instance.firstFollowCamera.Follow = null;
+            foreach (var item in allcollectedChars)
+            {
+               
+                item.transform.SetParent(null);
+                item.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f).OnComplete(() => 
+                {
+                    item.OnFinish();
+                });
+            }
+
+           transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f);
+            anim.SetTrigger("dance");
+           
+
+        });
+
+    }
+    public void  OnTouchedFinishXCollider(FinishXController finishX)
+    {
+       
+         anim.SetTrigger("punch");
+        foreach (var item in finishX.ownedPolices)
+        {
+           
+            StartCoroutine(item.Throw());
+        }
+    }
 
 }
+  
