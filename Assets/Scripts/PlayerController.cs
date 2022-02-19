@@ -20,10 +20,10 @@ public class PlayerController : GameSingleActor<PlayerController>
     public bool isMovement = true;
     public List<string> currentWords;
     public IceGroupCarrier currentIceGroup;
-    private bool inputChecking;
-    private float inputCheckingTimer;
+    [SerializeField] private bool inputChecking;
+    [SerializeField] private float inputCheckingTimer;
     public  List<IceChar> allcollectedChars;
-    private bool IsFailLetter;
+    [SerializeField] private bool IsFailLetter;
     [Header("Particles")]
     public ParticleSystem allTakeIceChars;
  
@@ -33,7 +33,7 @@ public class PlayerController : GameSingleActor<PlayerController>
           {
               currentWords.Add(letter);
               inputChecking = true;
-              inputCheckingTimer = Time.time + 1.15f;
+              inputCheckingTimer = Time.timeSinceLevelLoad + 1.15f;
              
           };
      }
@@ -47,7 +47,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     {
        if(inputChecking)
         {
-            if(inputCheckingTimer<Time.time)
+            if(inputCheckingTimer<Time.timeSinceLevelLoad)
             {
                 inputChecking = false;
                 IsThereWord();
@@ -64,9 +64,6 @@ public class PlayerController : GameSingleActor<PlayerController>
     {
       
         rb.velocity = new Vector3(inputManager.Result * rotateSpeed, rb.velocity.y, movementSpeed);
-        float rot_y = Mathf.Atan2(rb.velocity.x, rb.velocity.z) * Mathf.Rad2Deg;
-        rot_y = Mathf.Clamp(rot_y, -25, 25);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.localEulerAngles.x, rot_y, transform.localEulerAngles.x), 0.5f);
     }
     private void StopOrContinue(bool movementStatus)
     {
@@ -82,25 +79,7 @@ public class PlayerController : GameSingleActor<PlayerController>
         }
     }
 
-    public void OnTouchedIceGroupCollider(IceGroupCarrier touchedGroup)
-    {
-        currentIceGroup = touchedGroup;
-       
-      
-    }
-    public void MovementSpeedController(bool IsitClose)
-    {
-       
-        if(IsitClose)
-        {
-            movementSpeed /= 2.5f;
-
-        }
-        else
-        {
-            movementSpeed *= 2.5f;
-        }
-    }
+   
     public bool IsThereWord()
     {
         if (IsFailLetter)
@@ -146,7 +125,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     public IEnumerator TrueAnswer()
     {
-       
+        
         IceGroup findedgroup = currentIceGroup.groups.Find(x => x.iceProfiles.Count == currentWords.Count);
         StartCoroutine(UIActor.Instance.ClearTypedLetter(true));
         Destroy(currentIceGroup.failCollider);
@@ -163,18 +142,23 @@ public class PlayerController : GameSingleActor<PlayerController>
             yield return new WaitForSeconds(0.25f);
 
         }
-        MovementSpeedController(false);
-        
 
-
+      
         yield return new WaitForSeconds(0.15f);
         currentIceGroup.groups.ForEach(X => Destroy(X.gameObject));
            yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);
            currentWords.Clear();
-
-     
+           IsFailLetter = false;
+        Destroy(currentIceGroup.gameObject);
+        if (currentIceGroup.nexttouchediceGroupCarrier)
+        {
           
+            currentIceGroup = currentIceGroup.nexttouchediceGroupCarrier;
+            currentWords.Clear();
+
+        }
+
     }
     private void RefreshCamera()
     {
@@ -198,12 +182,20 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     private void Fail()
     {
-       
+        if(allcollectedChars.Count>0)
+        {
+            allcollectedChars.ForEach(x => x.anim.SetTrigger("finishfall"));
+        }
         isMovement = false;
         rb.velocity = Vector3.zero;
         GameManager.Instance.FinishLevel(false);
         UIActor.Instance.ShowHideLetterPanel(false);
         anim.SetTrigger("fail");
+    }
+    public IEnumerator Win()
+    {
+        yield return new WaitForSeconds(2f);
+        GameManager.Instance.FinishLevel(true);
     }
     public void OnTouchedFailCollider(FailColliderController fail)
     {
@@ -215,6 +207,16 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     public void OnTouchedFinish(FinishController finish)
     {
+        rb.isKinematic = true;
+        RefreshCamera();
+
+        GameObject fakeTarget = new GameObject("FakeTarget");
+        fakeTarget.transform.SetParent(transform.parent);
+        fakeTarget.transform.position = allcollectedChars[allcollectedChars.Count - 1].transform.position;
+        fakeTarget.transform.position = new Vector3(transform.position.x, fakeTarget.transform.position.y, fakeTarget.transform.position.z);
+         CameraActor.Instance.firstFollowCamera.Follow = fakeTarget.transform;
+
+        CameraActor.Instance.SwitchCameraUpdateMode(Cinemachine.CinemachineBrain.UpdateMethod.LateUpdate);
         UIActor.Instance.ShowHideLetterPanel(false);
         FinishController.FinishProfile profile=finish.finishProfiles.Find(x => x.mincollectedCharacterCount<=allcollectedChars.Count && x.maxcollectedCharacterCount>= allcollectedChars.Count);
         float dist = Vector3.Distance(transform.position, profile.targetPoint.position);
@@ -222,12 +224,13 @@ public class PlayerController : GameSingleActor<PlayerController>
         rb.velocity = Vector3.zero;
         isMovement = false;
         dist /= 3;
-        transform.DOMove(profile.targetPoint.position, dist / finish.finishProfiles.Count).SetEase(Ease.Flash).OnComplete(()=> 
+       
+        transform.DOMove(profile.targetPoint.position, dist / finish.finishProfiles.Count).SetEase(Ease.Linear).OnComplete(()=> 
         {
+            fakeTarget.transform.position = transform.position;
             CameraActor.Instance.firstFollowCamera.Follow = null;
             foreach (var item in allcollectedChars)
             {
-               
                 item.transform.SetParent(null);
                 item.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f).OnComplete(() => 
                 {
@@ -237,8 +240,16 @@ public class PlayerController : GameSingleActor<PlayerController>
 
            transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f);
             anim.SetTrigger("dance");
+      
             ParticleFXDisplayer confetti = new ParticleFXDisplayer() { destroyTime = 2f, particleID = "confetti", position = transform.localPosition+transform.up*8f };
             confetti.Display();
+            StartCoroutine(Win());
+           
+        }).OnUpdate(()=> 
+        {
+            fakeTarget.transform.position = allcollectedChars[allcollectedChars.Count - 1].transform.position;
+            fakeTarget.transform.position = new Vector3(transform.position.x, fakeTarget.transform.position.y, fakeTarget.transform.position.z);
+
         });
 
     }

@@ -12,15 +12,9 @@ public class IceChar : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
+   
     private static PlayerController player => PlayerController.Instance;
-    private void Update()
-    {
-        if(isMovement)
-        {
-            anim.SetBool("run", player.AnimStatus);
-        }
-       
-    }
+   
 
     public IEnumerator Fall(System.Action onMovementDone=null)
     {

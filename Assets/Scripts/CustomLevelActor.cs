@@ -6,10 +6,18 @@ using Coskunerov.Actors;
 public class CustomLevelActor : LevelActor
 {
     public Transform characterPoint;
+    public IceGroupCarrier firsticeGroupCarrier;
     public override void SetupLevel()
     {
         GameObject character=Instantiate(GameData.Instance.gameDataSO.characterPrefab, characterPoint.position, Quaternion.identity);
         character.transform.SetParent(transform);
+        StartCoroutine(Delay());
         CameraActor.Instance.firstFollowCamera.Follow = character.transform;
+    }
+
+    IEnumerator Delay() 
+    {
+        yield return new WaitForEndOfFrame();
+        PlayerController.Instance.currentIceGroup = firsticeGroupCarrier;
     }
 }

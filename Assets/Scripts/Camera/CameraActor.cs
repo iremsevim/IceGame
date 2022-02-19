@@ -34,6 +34,11 @@ public class CameraActor : GameSingleActor<CameraActor>
         cameraProfils.ForEach(x => x.camera.SetActive(false));
         findedcamera.camera.SetActive(true);
     }
+    public void SwitchCameraUpdateMode(CinemachineBrain.UpdateMethod updateMethod)
+    {
+        Camera.main.GetComponent<CinemachineBrain>().m_UpdateMethod = updateMethod;
+         
+    }
 
     [System.Serializable]
     public class CameraProfil

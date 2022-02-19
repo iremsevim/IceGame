@@ -6,6 +6,7 @@ using Coskunerov.Actors;
 using UnityEngine.UI;
 using Coskunerov.EventBehaviour;
 using Coskunerov.EventBehaviour.Attributes;
+using ElephantSDK;
 
 
 public class UIActor : GameSingleActor<UIActor>
@@ -66,8 +67,8 @@ public class UIActor : GameSingleActor<UIActor>
     public void NextLevel()
     {
         Coskunerov.Managers.GameManager.Instance.NextLevel();
-        winPanel.SetActive(false);
-        failPanel.SetActive(false);
+        
+       
     }
 
     [GE(BaseGameEvents.WinGame)]
@@ -75,21 +76,36 @@ public class UIActor : GameSingleActor<UIActor>
     {
         winPanel.SetActive(true);
         failPanel.SetActive(false);
-       // Elephant.LevelCompleted(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
+        Elephant.LevelCompleted(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
     }
     [GE(BaseGameEvents.LoseGame)]
     public void FailGame()
     {
         winPanel.SetActive(false);
         failPanel.SetActive(true);
-        //Elephant.LevelFailed(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
+        Elephant.LevelFailed(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
     }
-    [GE(BaseGameEvents.RestartGame)]
+   
     public void Retry()
+    {
+     
+        Coskunerov.Managers.GameManager.Instance.RestartLevel();
+        PlayerController.Instance.currentWords.Clear();
+        typedletters.text = string.Empty;
+     
+
+
+
+    }
+    [GE(BaseGameEvents.LevelLoaded)]
+    public void LoadLevel()
     {
         winPanel.SetActive(false);
         failPanel.SetActive(false);
-
+        CameraActor.Instance.SwitchCamera(CameraType.PoliceChase);
+        CameraActor.Instance.firstFollowCamera.Follow = PlayerController.Instance.transform;
+      
+       
 
     }
 }

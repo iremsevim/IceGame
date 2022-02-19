@@ -7,5 +7,8 @@ public class IceGroupCarrier : MonoBehaviour
 {
     public  List<IceGroup> groups;
     public GameObject failCollider;
+    public IceGroupCarrier nexttouchediceGroupCarrier;
+
+
 
 }

@@ -8,9 +8,11 @@ public class FinishPolice : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+     
     }
     public IEnumerator Throw()
     {
+      
         rb.useGravity = true;
         rb.AddForce(transform.up * 50 + transform.right * Random.Range(-1, 1) * 35,ForceMode.Impulse);
         yield return new WaitForSeconds(3F);

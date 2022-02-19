@@ -415,7 +415,7 @@ MonoBehaviour:
   anim: {fileID: 5691721909898076975}
   rb: {fileID: 4249764617722544143}
   inputManager: {fileID: 2747089881790733540}
-  movementSpeed: 13
+  movementSpeed: 15
   rotateSpeed: 9
   isMovement: 1
   currentWords: []
