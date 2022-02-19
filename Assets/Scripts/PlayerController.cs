@@ -180,12 +180,20 @@ public class PlayerController : GameSingleActor<PlayerController>
             triggerListener.OnTouched(this);
         }
     }
-    private void Fail()
+    private IEnumerator Fail()
     {
         if(allcollectedChars.Count>0)
         {
-            allcollectedChars.ForEach(x => x.anim.SetTrigger("finishfall"));
+            foreach (var item in allcollectedChars)
+            {
+                GameObject icecharRagdoll = Instantiate(item.ragdoll.gameObject, item.transform.position, item.transform.rotation);
+                Rigidbody rb = icecharRagdoll.GetComponent<Ragdoll>().pelvis;
+                rb.AddForce(item.transform.up * 100 +item. transform.right * Random.Range(-1, 1) * 50, ForceMode.Impulse);
+                yield return new WaitForSeconds(0.1f);
+                Destroy(item.gameObject);
+            }
         }
+       
         isMovement = false;
         rb.velocity = Vector3.zero;
         GameManager.Instance.FinishLevel(false);
@@ -199,7 +207,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     public void OnTouchedFailCollider(FailColliderController fail)
     {
-        Fail();
+       StartCoroutine(Fail());
     }
     public void OnTouchedLastInput(LastInputController lastInputController)
     {
@@ -251,6 +259,13 @@ public class PlayerController : GameSingleActor<PlayerController>
             fakeTarget.transform.position = new Vector3(transform.position.x, fakeTarget.transform.position.y, fakeTarget.transform.position.z);
 
         });
+
+    }
+    public void LevelLoaded()
+    {
+        currentWords.Clear();
+        allcollectedChars.ForEach(x => Destroy(x.gameObject));
+        allcollectedChars.Clear();
 
     }
     public void  OnTouchedFinishXCollider(FinishXController finishX)

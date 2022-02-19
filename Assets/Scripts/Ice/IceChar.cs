@@ -8,6 +8,7 @@ public class IceChar : MonoBehaviour
     public Animator anim;
     public bool isMovement;
     private static float direcitonAmount=-1;
+    public Ragdoll ragdoll;
     private void Awake()
     {
         anim = GetComponent<Animator>();

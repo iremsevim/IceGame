@@ -1482,6 +1482,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  isMovement: 0
+  ragdoll: {fileID: 397323045612645943, guid: 7b69ff399417ebc40b3e8ca0c29a6532, type: 3}
 --- !u!136 &439728318080793205
 CapsuleCollider:
   m_ObjectHideFlags: 0

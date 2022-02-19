@@ -91,7 +91,7 @@ public class UIActor : GameSingleActor<UIActor>
      
         Coskunerov.Managers.GameManager.Instance.RestartLevel();
         PlayerController.Instance.currentWords.Clear();
-        typedletters.text = string.Empty;
+        PlayerController.Instance.LevelLoaded();
      
 
 
@@ -104,8 +104,11 @@ public class UIActor : GameSingleActor<UIActor>
         failPanel.SetActive(false);
         CameraActor.Instance.SwitchCamera(CameraType.PoliceChase);
         CameraActor.Instance.firstFollowCamera.Follow = PlayerController.Instance.transform;
-      
-       
+        PlayerController.Instance.LevelLoaded();
+        typedletters.text = string.Empty;
+
+
+
 
     }
 }

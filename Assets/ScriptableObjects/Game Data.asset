@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Game Data
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 2603864480507758306, guid: 88091d7ad0ca45045aab058da7e47c10, type: 3}
+  policeRagdoll: {fileID: -3198454250865096306, guid: 5455ceec43ec48943b9e03db5f86bada, type: 3}
+  playerRagdoll: {fileID: 4129821369146316185, guid: ff4e3a5aace44764ba1980ecbf00cff4, type: 3}
