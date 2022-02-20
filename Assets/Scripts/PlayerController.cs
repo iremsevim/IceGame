@@ -187,6 +187,7 @@ public class PlayerController : GameSingleActor<PlayerController>
             foreach (var item in allcollectedChars)
             {
                 GameObject icecharRagdoll = Instantiate(item.ragdoll.gameObject, item.transform.position, item.transform.rotation);
+                icecharRagdoll.transform.SetParent(CustomLevelActor.Instance.transform);
                 Rigidbody rb = icecharRagdoll.GetComponent<Ragdoll>().pelvis;
                 rb.AddForce(item.transform.up * 100 +item. transform.right * Random.Range(-1, 1) * 50, ForceMode.Impulse);
                 yield return new WaitForSeconds(0.1f);

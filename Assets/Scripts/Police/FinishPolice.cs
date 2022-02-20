@@ -14,6 +14,7 @@ public class FinishPolice : MonoBehaviour
     {
         GameObject police=Instantiate(GameData.Instance.gameDataSO.policeRagdoll.gameObject, transform.position,transform.rotation);
         Ragdoll policeRagdoll=  police.GetComponent<Ragdoll>();
+        police.transform.SetParent(CustomLevelActor.Instance.transform);
         Rigidbody rb=  policeRagdoll.pelvis.GetComponent<Rigidbody>();
         rb.useGravity = true;
         rb.AddForce(transform.up * 300 + transform.right * Random.Range(-1, 1) * 75,ForceMode.Impulse);
