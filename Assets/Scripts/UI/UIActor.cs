@@ -6,7 +6,7 @@ using Coskunerov.Actors;
 using UnityEngine.UI;
 using Coskunerov.EventBehaviour;
 using Coskunerov.EventBehaviour.Attributes;
-//using ElephantSDK;
+using ElephantSDK;
 
 
 public class UIActor : GameSingleActor<UIActor>
@@ -76,14 +76,14 @@ public class UIActor : GameSingleActor<UIActor>
     {
         winPanel.SetActive(true);
         failPanel.SetActive(false);
-//        Elephant.LevelCompleted(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
+        Elephant.LevelCompleted(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
     }
     [GE(BaseGameEvents.LoseGame)]
     public void FailGame()
     {
         winPanel.SetActive(false);
         failPanel.SetActive(true);
-//        Elephant.LevelFailed(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
+       Elephant.LevelFailed(Coskunerov.Managers.GameManager.Instance.runtime.currentLevelIndex);
     }
    
     public void Retry()

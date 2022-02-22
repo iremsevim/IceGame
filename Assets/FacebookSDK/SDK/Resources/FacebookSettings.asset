@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - 0252f04795106306f0a5f697d2d0feea
+  - 86daf5d4fee22e171a40ce2f039f40c1
   appIds:
-  - 616391026095207
+  - 296240932610407
   appLabels:
-  - Rich Surfer
+  - Friend Savior
   cookie: 1
   logging: 1
   status: 1
