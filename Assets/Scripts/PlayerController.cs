@@ -29,11 +29,21 @@ public class PlayerController : GameSingleActor<PlayerController>
  
     public override void ActorAwake()
     {
+        TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, true);
+
+
         Letter.onDownLetterButton = (string letter) =>
           {
               currentWords.Add(letter);
+              IsThereWord();
               inputChecking = true;
               inputCheckingTimer = Time.timeSinceLevelLoad + 1.15f;
+             
+          };
+        Delete.OnTouched = () =>
+          {
+              if (currentWords.Count <= 0) return;
+              currentWords.RemoveAt(currentWords.Count-1);
              
           };
      }
@@ -45,14 +55,14 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     public override void ActorUpdate()
     {
-       if(inputChecking)
-        {
-            if(inputCheckingTimer<Time.timeSinceLevelLoad)
-            {
-                inputChecking = false;
-                IsThereWord();
-            }
-        }
+       //if(inputChecking)
+       // {
+       //     if(inputCheckingTimer<Time.timeSinceLevelLoad)
+       //     {
+       //         inputChecking = false;
+       //         IsThereWord();
+       //     }
+       // }
     }
     public override void ActorFixedUpdate()
     {
@@ -80,7 +90,49 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
 
    
-    public bool IsThereWord()
+    public void IsThereWord()
+    {
+        if (IsFailLetter||currentWords.Count<2)
+        {
+            return;
+        }
+
+        IceGroup matchGroup = null;
+        foreach (var item in currentIceGroup.groups)
+        {
+            bool isMatch = true;
+            for (int i = 0; i < item.iceProfiles.Count; i++)
+            {
+                if (item.iceProfiles[i].iceName.ToString() != currentWords[i])
+                {
+                    isMatch = false;
+                    break;
+                }
+            }
+            if (isMatch) 
+            {
+                matchGroup = item;
+                break;
+            }
+        }
+        if (matchGroup!=null)
+        {
+            if (currentWords.Count == matchGroup.iceProfiles.Count) 
+            {
+                Debug.Log("WIN");
+                StartCoroutine(TrueAnswer());
+            }
+        }
+        else
+        {
+            Debug.Log("FAIL");
+            FalseAnswer();
+        }
+
+       
+    
+    }  
+    public bool IsThereWord2()
     {
         if (IsFailLetter)
         {
@@ -137,14 +189,14 @@ public class PlayerController : GameSingleActor<PlayerController>
             System.Action action = null;
             if (i == findedgroup.iceProfiles.Count - 1) action = RefreshCamera;
             item.ice.GetComponent<Ice>().BreakIce(action);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
             Destroy(item.ice.gameObject);
-            yield return new WaitForSeconds(0.25f);
+           //yield return new WaitForSeconds(0.1f);
 
         }
 
       
-        yield return new WaitForSeconds(0.15f);
+      //  yield return new WaitForSeconds(0.15f);
         currentIceGroup.groups.ForEach(X => Destroy(X.gameObject));
            yield return new WaitForSeconds(0.25f);
            StopOrContinue(false);
@@ -182,6 +234,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     private IEnumerator Fail()
     {
+       
         if(allcollectedChars.Count>0)
         {
             foreach (var item in allcollectedChars)

@@ -19,10 +19,11 @@ public class Letter : MonoBehaviour
     }
     public void PressKey()
     {
-        onDownLetterButton?.Invoke(holdingLetter);
         UIActor.Instance.typedletters.text += holdingLetter;
-
+        onDownLetterButton?.Invoke(holdingLetter);
+   
 
     }
+   
   
 }
