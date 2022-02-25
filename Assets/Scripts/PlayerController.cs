@@ -100,9 +100,15 @@ public class PlayerController : GameSingleActor<PlayerController>
         IceGroup matchGroup = null;
         foreach (var item in currentIceGroup.groups)
         {
+            
             bool isMatch = true;
             for (int i = 0; i < item.iceProfiles.Count; i++)
             {
+                if (i > currentWords.Count)
+                {
+                    isMatch = false;
+                    break;
+                }
                 if (item.iceProfiles[i].iceName.ToString() != currentWords[i])
                 {
                     isMatch = false;

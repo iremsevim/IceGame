@@ -67,8 +67,9 @@ public class UIActor : GameSingleActor<UIActor>
     public void NextLevel()
     {
         Coskunerov.Managers.GameManager.Instance.NextLevel();
-        
        
+
+
     }
 
     [GE(BaseGameEvents.WinGame)]
@@ -106,6 +107,7 @@ public class UIActor : GameSingleActor<UIActor>
         CameraActor.Instance.firstFollowCamera.Follow = PlayerController.Instance.transform;
         PlayerController.Instance.LevelLoaded();
         typedletters.text = string.Empty;
+        PlayerController.Instance.currentWords.Clear();
 
 
 

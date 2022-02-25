@@ -25,7 +25,7 @@ public class IceChar : MonoBehaviour
         Vector3 charPos =player.LastPos - (player.allcollectedChars.Count * (Vector3.forward * 3f)) + Vector3.up * 0.5f+(Vector3.right *1.25f)*direcitonAmount;
         yield return new WaitForSeconds(0.00001f);
         direcitonAmount *= -1;
-        transform.localScale *= 2.85f;
+        transform.localScale *= 2f;
 
         float dist= Vector3.Distance(transform.position, charPos);
         float multiper = dist / 30f;
