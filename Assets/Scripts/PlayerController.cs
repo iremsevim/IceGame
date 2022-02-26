@@ -44,9 +44,6 @@ public class PlayerController : GameSingleActor<PlayerController>
           {
               if (currentWords.Count <= 0) return;
               UIActor.Instance.DeleteText(currentWords);
-
-
-
           };
      }
     public Vector3 LastPos => transform.position;

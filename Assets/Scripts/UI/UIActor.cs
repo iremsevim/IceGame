@@ -65,7 +65,7 @@ public class UIActor : GameSingleActor<UIActor>
     public void DeleteText(List<string> currentWords)
     {
         currentWords.RemoveAt(currentWords.Count - 1);
-       typedletters.text = typedletters.text.Substring(0, UIActor.Instance.typedletters.text.Length - 1);
+       typedletters.text = typedletters.text.Substring(0, typedletters.text.Length - 1);
     }
 
 
