@@ -62,6 +62,11 @@ public class UIActor : GameSingleActor<UIActor>
 
 
     }
+    public void DeleteText(List<string> currentWords)
+    {
+        currentWords.RemoveAt(currentWords.Count - 1);
+       typedletters.text = typedletters.text.Substring(0, UIActor.Instance.typedletters.text.Length - 1);
+    }
 
 
     public void NextLevel()
@@ -93,6 +98,7 @@ public class UIActor : GameSingleActor<UIActor>
         Coskunerov.Managers.GameManager.Instance.RestartLevel();
         PlayerController.Instance.currentWords.Clear();
         PlayerController.Instance.LevelLoaded();
+       
      
 
 
@@ -103,8 +109,8 @@ public class UIActor : GameSingleActor<UIActor>
     {
         winPanel.SetActive(false);
         failPanel.SetActive(false);
-        CameraActor.Instance.SwitchCamera(CameraType.PoliceChase);
         CameraActor.Instance.firstFollowCamera.Follow = PlayerController.Instance.transform;
+        CameraActor.Instance.SwitchCamera(CameraType.PoliceChase);
         PlayerController.Instance.LevelLoaded();
         typedletters.text = string.Empty;
         PlayerController.Instance.currentWords.Clear();

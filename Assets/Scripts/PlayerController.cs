@@ -43,8 +43,10 @@ public class PlayerController : GameSingleActor<PlayerController>
         Delete.OnTouched = () =>
           {
               if (currentWords.Count <= 0) return;
-              currentWords.RemoveAt(currentWords.Count-1);
-             
+              UIActor.Instance.DeleteText(currentWords);
+
+
+
           };
      }
     public Vector3 LastPos => transform.position;
