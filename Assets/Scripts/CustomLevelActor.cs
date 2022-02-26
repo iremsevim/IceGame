@@ -12,7 +12,7 @@ public class CustomLevelActor : LevelActor
         GameObject character=Instantiate(GameData.Instance.gameDataSO.characterPrefab, characterPoint.position, Quaternion.identity);
         character.transform.SetParent(transform);
         StartCoroutine(Delay());
-        CameraActor.Instance.firstFollowCamera.Follow = character.transform;
+        CameraActor.Instance.policeCam.Follow = character.transform;
     }
 
     IEnumerator Delay() 

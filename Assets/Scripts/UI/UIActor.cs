@@ -12,7 +12,9 @@ using ElephantSDK;
 public class UIActor : GameSingleActor<UIActor>
 {
     public RectTransform letterpanel;
-    private Vector3 letterPanelFirstPos;
+    public RectTransform upPos;
+    public RectTransform downPos;
+
     public Text typedletters;
     private Color panelColor;
     [Header("UI Panels")]
@@ -21,19 +23,19 @@ public class UIActor : GameSingleActor<UIActor>
 
     public override void ActorAwake()
     {
-        letterPanelFirstPos = letterpanel.GetComponent<RectTransform>().position;
+        
         panelColor = letterpanel.GetComponent<Image>().color;
     }
 
     public void ShowHideLetterPanel(bool status)
     {
-        if(status)
+        if (status)
         {
-            letterpanel.DOLocalMoveY(letterPanelFirstPos.y-300, 0.75f);
+            letterpanel.DOMove(upPos.position, 0.75f);
         }
         else
         {
-            letterpanel.DOMove(letterPanelFirstPos, 0.75f);
+            letterpanel.DOMove(downPos.position, 0.75f);
         }
     }
     public IEnumerator ClearTypedLetter(bool status)

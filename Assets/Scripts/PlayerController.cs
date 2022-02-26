@@ -102,9 +102,8 @@ public class PlayerController : GameSingleActor<PlayerController>
             bool isMatch = true;
             for (int i = 0; i < item.iceProfiles.Count; i++)
             {
-                if (i > currentWords.Count)
+                if (i > currentWords.Count-1)
                 {
-                    isMatch = false;
                     break;
                 }
                 if (item.iceProfiles[i].iceName.ToString() != currentWords[i])

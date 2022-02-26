@@ -18,6 +18,7 @@ public class CameraActor : GameSingleActor<CameraActor>
     [Header("All CameraDatas")]
     public List<CameraProfil> cameraProfils;
     public CinemachineVirtualCamera firstFollowCamera;
+    public CinemachineVirtualCamera policeCam;
 
 
     public override void ActorStart()
