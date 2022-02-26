@@ -24,8 +24,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     [SerializeField] private float inputCheckingTimer;
     public  List<IceChar> allcollectedChars;
     [SerializeField] private bool IsFailLetter;
-    [Header("Particles")]
-    public ParticleSystem allTakeIceChars;
+   
  
     public override void ActorAwake()
     {
@@ -221,7 +220,7 @@ public class PlayerController : GameSingleActor<PlayerController>
     {
 
         CameraActor.Instance.firstFollowCamera.Follow = allcollectedChars[allcollectedChars.Count - 1].transform;
-        allTakeIceChars.Play();
+       
     }
     public void FalseAnswer()
     {
