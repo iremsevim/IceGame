@@ -289,7 +289,12 @@ public class PlayerController : GameSingleActor<PlayerController>
         CameraActor.Instance.SwitchCameraUpdateMode(Cinemachine.CinemachineBrain.UpdateMethod.LateUpdate);
         UIActor.Instance.ShowHideLetterPanel(false);
         FinishController.FinishProfile profile=finish.finishProfiles.Find(x => x.mincollectedCharacterCount<=allcollectedChars.Count && x.maxcollectedCharacterCount>= allcollectedChars.Count);
+        if(profile==null)
+        {
+            profile = finish.finishProfiles[finish.finishProfiles.Count - 1];
+        }
         float dist = Vector3.Distance(transform.position, profile.targetPoint.position);
+       
         Debug.Log(dist);
         rb.velocity = Vector3.zero;
         isMovement = false;
