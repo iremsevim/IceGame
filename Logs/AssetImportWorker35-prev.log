@@ -6,41 +6,41 @@ Using pre-set license
 -batchMode
 -noUpm
 -name
-AssetImportWorker0
+AssetImportWorker35
 -projectPath
 /Users/mustafacoskuner/Documents/GitHub/IceGame
 -logFile
-Logs/AssetImportWorker0.log
+Logs/AssetImportWorker35.log
 -srvPort
 65402
 Successfully changed project path to: /Users/mustafacoskuner/Documents/GitHub/IceGame
 /Users/mustafacoskuner/Documents/GitHub/IceGame
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 371.67 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 315.64 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.6f1 (338bb68529b2)
 [Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2020.3.6f1/Unity.app/Contents/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path /Users/mustafacoskuner/Documents/GitHub/IceGame/Assets
 GfxDevice: creating device client; threaded=0
-2022-02-27 01:08:01.881 Unity[44776:2100569] iMac preferred device: AMD Radeon R9 M380 (high power)
-2022-02-27 01:08:01.881 Unity[44776:2100569] Metal devices available: 1
-2022-02-27 01:08:01.881 Unity[44776:2100569] 0: AMD Radeon R9 M380 (high power)
-2022-02-27 01:08:01.881 Unity[44776:2100569] Using device AMD Radeon R9 M380 (high power)
+2022-02-27 01:45:12.310 Unity[45575:2124118] iMac preferred device: AMD Radeon R9 M380 (high power)
+2022-02-27 01:45:12.310 Unity[45575:2124118] Metal devices available: 1
+2022-02-27 01:45:12.310 Unity[45575:2124118] 0: AMD Radeon R9 M380 (high power)
+2022-02-27 01:45:12.310 Unity[45575:2124118] Using device AMD Radeon R9 M380 (high power)
 Initializing Metal device caps: AMD Radeon R9 M380
 Initialize mono
 Mono path[0] = '/Applications/Unity/Hub/Editor/2020.3.6f1/Unity.app/Contents/Managed'
 Mono path[1] = '/Applications/Unity/Hub/Editor/2020.3.6f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = '/Applications/Unity/Hub/Editor/2020.3.6f1/Unity.app/Contents/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56776
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56575
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/2020.3.6f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
-Registered in 0.030851 seconds.
+Registered in 0.113718 seconds.
 Native extension for OSXStandalone target not found
-Refreshing native plugins compatible for Editor in 70.55 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 330.09 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  3.450 seconds
+- Completed reload, in 16.836 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.326342 seconds.
+Registered in 0.659331 seconds.
