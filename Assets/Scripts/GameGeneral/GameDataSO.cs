@@ -9,5 +9,15 @@ public class GameDataSO : ScriptableObject
     public Ragdoll policeRagdoll;
     public Ragdoll playerRagdoll;
     public List<IceChar> iceCharsPrefabs;
-    
+
+    private int index = 0;
+    public IceChar GetIceChar
+    {
+        get
+        {
+            index++;
+            if (index > iceCharsPrefabs.Count - 1) index = 0;
+            return iceCharsPrefabs[index];
+        }
+    }
 }

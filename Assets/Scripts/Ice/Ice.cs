@@ -20,7 +20,7 @@ public class Ice : MonoBehaviour
         if (breakableWindow == null) return result;
            breakableWindow.breakWindow();
 
-        GameObject createdChar= Instantiate(GameData.Instance.gameDataSO.iceCharsPrefabs[Random.Range(0, GameData.Instance.gameDataSO.iceCharsPrefabs.Count)].gameObject,
+        GameObject createdChar= Instantiate(GameData.Instance.gameDataSO.GetIceChar.gameObject,
          iceChar.transform.position,iceChar.transform.rotation);
         createdChar.transform.localScale /= 2.2f;
         if(createdChar.TryGetComponent(out IceChar iceCharComp)) 
