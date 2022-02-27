@@ -15,3 +15,9 @@ MonoBehaviour:
   characterPrefab: {fileID: 2603864480507758306, guid: 88091d7ad0ca45045aab058da7e47c10, type: 3}
   policeRagdoll: {fileID: -3198454250865096306, guid: 5455ceec43ec48943b9e03db5f86bada, type: 3}
   playerRagdoll: {fileID: 4129821369146316185, guid: ff4e3a5aace44764ba1980ecbf00cff4, type: 3}
+  iceCharsPrefabs:
+  - {fileID: 3690067605587957802, guid: 906b7b691573cc043afaba940d6017ef, type: 3}
+  - {fileID: 8777557123903118663, guid: 7f8ef2e7f8a370445b8b45e3d7460723, type: 3}
+  - {fileID: -7069076210995370, guid: 75d4e7545257c51408c56020152fafc4, type: 3}
+  - {fileID: -1244480336067596843, guid: 99155a34c3f27554f99170f397bd288e, type: 3}
+  - {fileID: 1055084971432649971, guid: f8f753c51317fb745814fdf26143dc58, type: 3}

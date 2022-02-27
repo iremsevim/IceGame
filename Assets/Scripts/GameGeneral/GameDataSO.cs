@@ -8,5 +8,6 @@ public class GameDataSO : ScriptableObject
     public GameObject characterPrefab;
     public Ragdoll policeRagdoll;
     public Ragdoll playerRagdoll;
+    public List<IceChar> iceCharsPrefabs;
     
 }

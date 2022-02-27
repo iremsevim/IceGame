@@ -9,7 +9,20 @@ public class PoliceMan : GameSingleActor<PoliceMan>
     public Vector3 offset;
     public float chaseTimer = 2f;
     public Animator animator;
-    private bool isStop;
+    public bool isStop;
+    public override void ActorAwake()
+    {
+        if (!Info.displayed) 
+        {
+            isStop = true;
+           animator.SetBool("run", false);
+        }
+        else
+        {
+            animator.SetBool("run", true);
+        }
+        
+    }
     public override void ActorUpdate()
     {
         if (isStop) return;

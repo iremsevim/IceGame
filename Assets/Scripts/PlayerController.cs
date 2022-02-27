@@ -30,6 +30,7 @@ public class PlayerController : GameSingleActor<PlayerController>
 
     public override void ActorAwake()
     {
+      
         targetLastObject = new GameObject();
         targetLastObject.transform.SetParent(transform);
         targetLastObject.transform.localPosition = Vector3.zero;
@@ -47,12 +48,21 @@ public class PlayerController : GameSingleActor<PlayerController>
               if (currentWords.Count <= 0) return;
               UIActor.Instance.DeleteText(currentWords);
           };
+        Info.onClosedPanel = () =>
+          {
+              StopOrMovement(true);
+              PoliceMan.Instance.isStop = false;
+              PoliceMan.Instance.animator.SetBool("run", isMovement);
+            //CameraActor.Instance.SwitchCamera(CameraType.PoliceChase);
+
+
+          };
      }
     public Vector3 LastPos => transform.position;
    
     public override void ActorStart()
     {
-        anim.SetBool("run", true);
+        StopOrMovement(Info.displayed);
     }
     public override void ActorUpdate()
     {
@@ -70,7 +80,14 @@ public class PlayerController : GameSingleActor<PlayerController>
         if (!isMovement) return;
         Movement();
     }
-    public bool AnimStatus =>isMovement;
+    public void StopOrMovement(bool status)
+    {
+        isMovement = status;
+        rb.velocity = Vector3.zero;
+        anim.SetBool("run", status);
+       
+    }
+   
     public void Movement()
     {
       
@@ -190,11 +207,11 @@ public class PlayerController : GameSingleActor<PlayerController>
         for (int i = 0; i < findedgroup.iceProfiles.Count; i++)
         {
             var item = findedgroup.iceProfiles[i];
-            allcollectedChars.Add(item.ice.iceChar);
+          
 
             System.Action action = null;
             if (i == findedgroup.iceProfiles.Count - 1) action = RefreshCamera;
-            item.ice.GetComponent<Ice>().BreakIce(action,i*17);
+            allcollectedChars.Add(item.ice.GetComponent<Ice>().BreakIce(action, i * 17));
             yield return new WaitForSeconds(0.01f);
             Destroy(item.ice.gameObject);
            //yield return new WaitForSeconds(0.1f);

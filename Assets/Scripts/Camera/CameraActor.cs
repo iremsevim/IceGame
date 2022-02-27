@@ -19,14 +19,10 @@ public class CameraActor : GameSingleActor<CameraActor>
     public List<CameraProfil> cameraProfils;
     public CinemachineVirtualCamera firstFollowCamera;
     public CinemachineVirtualCamera policeCam;
-
-
-    public override void ActorStart()
+    public override void ActorAwake()
     {
-        SwitchCamera(CameraType.PoliceChase);
+        CameraActor.Instance.SwitchCamera(CameraType.PoliceChase);
     }
-    
-
     public void SwitchCamera(CameraType currentcamera)
     {
       CameraProfil findedcamera= cameraProfils.Find(x => x.cameraType == currentcamera);

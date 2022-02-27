@@ -8,17 +8,29 @@ public class Ice : MonoBehaviour
     public IceChar iceChar;
 
     private void Awake()
-    {
-        iceChar.gameObject.SetActive(false);
+    { 
+        if(iceChar)
+     iceChar.gameObject.SetActive(false);
     }
 
-    public void BreakIce(System.Action onMovementDone=null,int zdelay=0)
+    public IceChar BreakIce(System.Action onMovementDone=null,int zdelay=0)
     {
-        if (breakableWindow == null) return;
+        IceChar result = null;
+
+        if (breakableWindow == null) return result;
            breakableWindow.breakWindow();
 
-        iceChar.gameObject.SetActive(true);
-         StartCoroutine(iceChar.Fall(onMovementDone,zdelay));
+        GameObject createdChar= Instantiate(GameData.Instance.gameDataSO.iceCharsPrefabs[Random.Range(0, GameData.Instance.gameDataSO.iceCharsPrefabs.Count)].gameObject,
+         iceChar.transform.position,iceChar.transform.rotation);
+        createdChar.transform.localScale /= 2.2f;
+        if(createdChar.TryGetComponent(out IceChar iceCharComp)) 
+        {
+            StartCoroutine(iceCharComp.Fall(onMovementDone, zdelay));
+            result = iceCharComp;
+        }
+        return result;
+        //iceChar.gameObject.SetActive(true);
+        
 
     }
 }
