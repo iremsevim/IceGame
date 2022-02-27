@@ -6160,7 +6160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2230637101908014636
 Transform:
   m_ObjectHideFlags: 0
@@ -18286,7 +18286,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2553234159200370639}
   m_LocalRotation: {x: 0.00000000791624, y: -0, z: 0.9999603, w: 0.008907827}
-  m_LocalPosition: {x: -3.7, y: -356.9, z: 23.1}
+  m_LocalPosition: {x: -1.5, y: -356.9, z: 23.1}
   m_LocalScale: {x: 1093.0763, y: 1093.0764, z: 1093.0763}
   m_Children: []
   m_Father: {fileID: 7782248076197470800}
@@ -31298,7 +31298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3940273607271709480
 Transform:
   m_ObjectHideFlags: 0
@@ -32237,7 +32237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9054175037898577511
 Transform:
   m_ObjectHideFlags: 0
@@ -42446,7 +42446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2177237826004969748
 Transform:
   m_ObjectHideFlags: 0
@@ -46113,7 +46113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3666349686551061176
 Transform:
   m_ObjectHideFlags: 0
@@ -57220,7 +57220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6407995398108772121
 Transform:
   m_ObjectHideFlags: 0

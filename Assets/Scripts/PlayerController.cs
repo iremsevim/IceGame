@@ -24,12 +24,15 @@ public class PlayerController : GameSingleActor<PlayerController>
     [SerializeField] private float inputCheckingTimer;
     public  List<IceChar> allcollectedChars;
     [SerializeField] private bool IsFailLetter;
-   
- 
+    public GameObject targetLastObject;
+
+
+
     public override void ActorAwake()
     {
-        TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default, false, false, true);
-
+        targetLastObject = new GameObject();
+        targetLastObject.transform.SetParent(transform);
+        targetLastObject.transform.localPosition = Vector3.zero;
 
         Letter.onDownLetterButton = (string letter) =>
           {
@@ -191,7 +194,7 @@ public class PlayerController : GameSingleActor<PlayerController>
 
             System.Action action = null;
             if (i == findedgroup.iceProfiles.Count - 1) action = RefreshCamera;
-            item.ice.GetComponent<Ice>().BreakIce(action);
+            item.ice.GetComponent<Ice>().BreakIce(action,i*17);
             yield return new WaitForSeconds(0.01f);
             Destroy(item.ice.gameObject);
            //yield return new WaitForSeconds(0.1f);
@@ -217,8 +220,10 @@ public class PlayerController : GameSingleActor<PlayerController>
     }
     private void RefreshCamera()
     {
-
-        CameraActor.Instance.firstFollowCamera.Follow = allcollectedChars[allcollectedChars.Count - 1].transform;
+        Vector3 pos = allcollectedChars[allcollectedChars.Count - 1].transform.localPosition;
+        pos.x = 0;
+        targetLastObject.transform.localPosition = pos;
+        CameraActor.Instance.firstFollowCamera.Follow =targetLastObject.transform;
        
     }
     public void FalseAnswer()
@@ -284,7 +289,12 @@ public class PlayerController : GameSingleActor<PlayerController>
         CameraActor.Instance.SwitchCameraUpdateMode(Cinemachine.CinemachineBrain.UpdateMethod.LateUpdate);
         UIActor.Instance.ShowHideLetterPanel(false);
         FinishController.FinishProfile profile=finish.finishProfiles.Find(x => x.mincollectedCharacterCount<=allcollectedChars.Count && x.maxcollectedCharacterCount>= allcollectedChars.Count);
+        if(profile==null)
+        {
+            profile = finish.finishProfiles[finish.finishProfiles.Count - 1];
+        }
         float dist = Vector3.Distance(transform.position, profile.targetPoint.position);
+       
         Debug.Log(dist);
         rb.velocity = Vector3.zero;
         isMovement = false;

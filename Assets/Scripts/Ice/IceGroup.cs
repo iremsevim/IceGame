@@ -4,7 +4,7 @@ using UnityEngine;
 public enum IceType
 {
     A,
-    B,C, D, E, F, G, H,I,J,K,L,M,N,O,P,R,S,T,U,V,Y,Z
+    B,C, D, E, F, G, H,I,J,K,L,M,N,O,P,R,S,T,U,V,Y,Z,W
 }
 public class IceGroup : MonoBehaviour
 {
