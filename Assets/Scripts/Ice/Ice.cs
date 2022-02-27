@@ -12,13 +12,13 @@ public class Ice : MonoBehaviour
         iceChar.gameObject.SetActive(false);
     }
 
-    public void BreakIce(System.Action onMovementDone=null)
+    public void BreakIce(System.Action onMovementDone=null,int zdelay=0)
     {
         if (breakableWindow == null) return;
            breakableWindow.breakWindow();
 
         iceChar.gameObject.SetActive(true);
-         StartCoroutine(iceChar.Fall(onMovementDone));
+         StartCoroutine(iceChar.Fall(onMovementDone,zdelay));
 
     }
 }

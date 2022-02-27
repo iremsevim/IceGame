@@ -17,11 +17,15 @@ public class IceChar : MonoBehaviour
     private static PlayerController player => PlayerController.Instance;
    
 
-    public IEnumerator Fall(System.Action onMovementDone=null)
+    public IEnumerator Fall(System.Action onMovementDone=null,int zdelay=0)
     {
         transform.SetParent(null);
         anim.SetTrigger("fall");
-
+        Vector3 pos = transform.position;
+        pos.y = player.transform.position.y;
+        pos.z -= zdelay;
+        transform.position = pos;
+        
         Vector3 charPos =player.LastPos - (player.allcollectedChars.Count * (Vector3.forward * 3f)) + Vector3.up * 0.5f+(Vector3.right *1.25f)*direcitonAmount;
         yield return new WaitForSeconds(0.00001f);
         direcitonAmount *= -1;
