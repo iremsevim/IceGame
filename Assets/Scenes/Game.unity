@@ -891,14 +891,14 @@ MonoBehaviour:
       midtones: {r: 1, g: 1, b: 1, a: 1}
       highlights: {r: 1, g: 1, b: 1, a: 1}
     basics:
-      temperatureShift: 0.08
-      tint: 0.14
+      temperatureShift: 0
+      tint: 0.15
       hue: 0
       saturation: 1.31
-      vibrance: 0.14
+      vibrance: 0.155
       value: 1
       contrast: 1
-      gain: 1
+      gain: 0.8
       gamma: 1
     channelMixer:
       currentChannel: 0
