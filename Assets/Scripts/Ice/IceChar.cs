@@ -26,7 +26,7 @@ public class IceChar : MonoBehaviour
         pos.z -= zdelay;
         transform.position = pos;
         
-        Vector3 charPos =player.LastPos - (player.allcollectedChars.Count * (Vector3.forward * 3f)) + Vector3.up * 0.5f+(Vector3.right *1.25f)*direcitonAmount;
+        Vector3 charPos =player.LastPos - (player.allcollectedChars.Count * (Vector3.forward * 2.5f)) + Vector3.up * 0.5f+(Vector3.right *1.25f)*direcitonAmount;
         yield return new WaitForSeconds(0.00001f);
         direcitonAmount *= -1;
         transform.localScale *= 2f;

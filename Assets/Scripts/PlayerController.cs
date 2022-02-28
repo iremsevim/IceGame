@@ -58,7 +58,7 @@ public class PlayerController : GameSingleActor<PlayerController>
 
           };
      }
-    public Vector3 LastPos => transform.position;
+    public Vector3 LastPos => transform.position+Vector3.back*2.5f;
    
     public override void ActorStart()
     {
